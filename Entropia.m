@@ -9,7 +9,7 @@ length_P = length(P(:));
 hits = calcOcorrencias(P, A);
     
 for i=1:length(hits)
-    probabilidades(i)=hist(i)/length_P; %probabilidade 
+    probabilidades(i)=hits(i)/length_P; %probabilidade 
 end
 
 probs=find(probabilidades);% devolve vector com o indice linear de probs != 0
