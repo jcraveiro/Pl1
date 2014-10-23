@@ -15,7 +15,7 @@ imagem=imread('dados/kid.bmp');
 alfabeto = criaAlfabeto('dados/kid.bmp');
 hist= Histograma(imagem, alfabeto);
 
-ent=Entropia(imagem, alfabeto);
+ent=Entropia(imagem, alfabeto, hist);
 disp('entropia:');
 disp(ent);
 HF = hufflen(hist);
@@ -31,7 +31,7 @@ imagem=imread('dados/homer.bmp');
 alfabeto=criaAlfabeto('dados/homer.bmp');
 hist=Histograma(imagem, alfabeto);
 
-ent=Entropia(imagem, alfabeto);
+ent=Entropia(imagem, alfabeto, hist);
 disp('entropia:');
 disp(ent);
 HF = hufflen(hist);
@@ -47,7 +47,7 @@ imagem=imread('dados/homerBin.bmp');
 alfabeto=criaAlfabeto('dados/homerBin.bmp');
 hist=Histograma(imagem, alfabeto);
 
-ent=Entropia(imagem, alfabeto);
+ent=Entropia(imagem, alfabeto, hist);
 disp('entropia:');
 disp(ent);
 HF = hufflen(hist);
@@ -63,7 +63,7 @@ disp('guitarSolo.wav');
 alfabeto=criaAlfabeto('dados/guitarSolo.wav');
 hist=Histograma(signal, alfabeto);
 
-ent=Entropia(signal, alfabeto);
+ent=Entropia(signal, alfabeto, hist);
 disp('entropia:');
 disp(ent);
 HF = hufflen(hist);
@@ -80,7 +80,7 @@ text=fscanf(fileID, '%c');
 alfabeto=criaAlfabeto('dados/english.txt');
 hist=Histograma(text, alfabeto);
 
-ent=Entropia(text, alfabeto);
+ent=Entropia(text, alfabeto, hist);
 disp('entropia:');
 
 disp(ent);
