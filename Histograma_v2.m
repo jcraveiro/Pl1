@@ -5,7 +5,7 @@ function hits = Histograma_v2( P, A, file_path )
 
 hits = calcOcorrencias_v2(P, A, file_path);
 
-bar(1:1:length(hist), hist);
+bar(1:1:length(hits), hits);
 axis 'auto x';
 axis 'auto y';
 

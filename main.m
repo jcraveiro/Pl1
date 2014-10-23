@@ -1,12 +1,4 @@
-%na minha opiniao nao podemos desenhar o grafico na funcao histograma pois
-%precisavamos de mandar a extensao(axis muda com o ficheiro) e assim ja nao
-%recebia apenas P e A
-
-%Tambem fiz um script que cria o alfabeto para cada fonte
-
-%IMPORTANTE por agora a funcao histograma so desenha um grafico nas imagens
-%primeiro porque nenhuma e rgb(acho) e segunda porque demois acho que da
-%mess up no calculo da entropia
+%Exercios 1 - 3
 
 %kid.bmp
 disp('kid.bmp');
