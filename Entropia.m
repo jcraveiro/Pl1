@@ -1,4 +1,4 @@
-function [H] = Entropia(P, A, hist)
+function [H] = Entropia(P, A)
 %Entropia devolve o limite minimo teorico para o numero medio de bits por simbolo.
 %   P - fonte de informacao
 %   A - alfabeto de P
@@ -6,6 +6,7 @@ function [H] = Entropia(P, A, hist)
 probabilidades = zeros(1, length(A)); %inicializacao de matriz de probabilidades
 
 length_P = length(P(:));
+hits = calcOcorrencias(P, A);
     
 for i=1:length(hits)
     probabilidades(i)=hist(i)/length_P; %probabilidade 
