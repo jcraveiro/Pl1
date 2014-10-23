@@ -8,7 +8,7 @@ probabilidades = zeros(1, length(A)); %inicializacao de matriz de probabilidades
 length_P = length(P(:));
     
 for i=1:length(hits)
-    probabilidades(i)=hits(i)/length_P; %probabilidade 
+    probabilidades(i)=hist(i)/length_P; %probabilidade 
 end
 
 probs=find(probabilidades);% devolve vector com o indice linear de probs != 0
