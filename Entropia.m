@@ -3,7 +3,6 @@ function [H] = Entropia(P, A)
 %   P - fonte de informacao
 %   A - alfabeto de P
 
-%de maneira a tornar estas funcoes o mais indenpendentes possiveis
 %calcula-mos aqui tambem o numero de ocurrencias dos simbolos do alfabeto
 %na fonte de informacao
 ocorrencias = zeros(1, length(A)); %necessario para calcular probabilidades (podia ter usado funcao histograma mas como no enunciado parecia serem 2 exercicios separados fiz assim)
