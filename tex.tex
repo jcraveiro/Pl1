@@ -1,0 +1,202 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage[utf8]{inputenc}
+\graphicspath{ {images/} }
+
+\begin{document}
+
+\title{\bfseries{}Entropia, Redundância e \\Informação mútua}
+
+\author{\\ \\ \\Nuno Gonçalves, 2013140672 \\ João Craveiro, 2013136429 \\ \\ \\ }
+
+\maketitle
+
+\newpage
+
+\section{Histograma.m}
+Com a finalidade de criar uma vizualização gráfica, por meio de um histograma, para o número de ocorrências dos símbolos de determinado alfabeto, criámos uma script "Histograma.m" que recebe como argumentos:\\\\
+$\Rightarrow$ P (fonte de informação a analisar)\\
+$\Rightarrow$ A (alfabeto, que contém todos os caracteres possíveis para a fonte P)\\\\
+Com base nestes dois argumentos, e com o auxílio da funçao \textbf{bar}, criamos o display final apresentado ao utilizador.
+
+\section{Entropia.m}
+
+Neste exercício é-nos pedido para "\textit{determinar o limite mínimo teórico para o número médio de bits por símbolo}", isto é, a \textit{entropia}. Criámos então uma script, "Entropia.h", que recebe como argumentos:\\\\
+$\Rightarrow$ P (fonte de informação a analisar)\\
+$\Rightarrow$ A (alfabeto, que contém todos os caracteres possíveis para a fonte P)\\\\
+\textbf{1º passo:}\\
+Cálculo da probabilidade de ocorrência de cada símbolo, através de \textbf{calcOcorrencias};\\\\
+\textbf{2º passo:}\\
+Remoção do todos os valores iguais a 0, do vector de probabilidades criado;\\\\
+\textbf{3º passo}\\
+Cálculo da entropia através da fómula:\\\\
+\[
+H_x = -\sum_i P_x . log_2 \left(\frac{1}{P_x}\right)
+\]
+
+\newpage
+
+\section{Dados e representação gráfica}
+
+Usando  as funções implementadas nos dois anteriores exercícios, criámos um script que:\\
+- lê os ficheiros a analisar;\\
+- determina o seu alfabeto através da função \textbf{criaAlfabeto};\\
+- representa o seu histograma de ocorrências;\\
+- calcula a sua entropia.\\\\                    
+Os alfabetos são determinados na função \textbf{criaAlfabeto} através de um switch que analisa a extensão do ficheiro e depois retorna o alfabeto correspondente.
+
+\subsection{criaAlfabeto.m}
+
+$\Rightarrow$ Para os ficheiros \textit{bmp} sabemos que o alfabeto reside entre 0 e 255, ($2^nbits$)-1, logo bastou criar uma matriz entre 0 e 255 com step de 1. \\
+$\Rightarrow$ No ficheiro de texto o alfabeto assume-se ser composto por todas as letras do alfabeto romano sem assentos, pontuação e o caracter espaço.\\
+$\Rightarrow$ Para o ficheiro \textit{wav}, através dos valores retornados pelo \textbf{wavread} (fonte e numero de bits para indexar o alfabeto (nbits)),  usando a função \textbf{linspace}, gera-se uma matriz do alfabeto de $2^nbits$ compreendida no  intervalo [-1,1[.\\
+
+\subsection{Cálculos e resultados}
+\rule{12.5cm}{0.4pt}\\\\
+\ \ \ \ \ \ \ \ \ \ kid.bmp  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  homer.bmp\\
+\centerline{\includegraphics[scale=0.40]{histograma_kid} \includegraphics[scale=0.40]{histograma_homer}}
+\ \ \ Entropia: 6.954143  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Entropia: 3.465865\\\\
+\rule{12.5cm}{0.4pt}\\\\
+\ \ \ \ \ \ \ \ \ \ homerBin.bmp  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  guitarSolo.wav\\
+\centerline{\includegraphics[scale=0.40]{histograma_homerBin} \includegraphics[scale=0.40]{histograma_guitarSolo}}
+\ \ \ Entropia: 6.954143  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Entropia: 3.465865\\\\
+\rule{12.5cm}{0.4pt}\\\\
+\begin{center}
+english.txt\\
+\includegraphics[scale=0.40]{histograma_english}\\
+Entropia: 4.227968
+\end{center}
+\rule{12.5cm}{0.4pt}\\\\
+
+\subsection{Comentário aos dados}
+
+Em análise, mediante os nossos conhecimentos, concordamos com os resultados obtidos.\\No homerBin.bmp estes resultados demostram uma predominância exclusiva da cor preta (0) e branca (255), como realmente acontece.\\No homer.bmp consegue-se verificar a dominância da cor preta, mas também se notam ligeiras ocorrências de cores próximas, ora do preto ora do branco, o que nos leva a perceber que na imagem predomina o preto e cores cinzentas claras ou escuras.\\Já o kid.bmp tem uma distribuição mais variada, logo supõe-se haver um maior número de tons acinzentados e pretos, não totalmente escuros.\\Quanto ao ficheiro de texto, cujo código ASCII correspondente a cada caracter está representado no eixo dos XX do gráfico, podemos verificar um menor número de ocorrências nos primeiros índices - ou seja nas letras minúsculas, como seria expectável.\\\\A entropia, segundo vemos pelos gráficos, irá ser maior no guitarSolo.bmp, visto ser o que apresenta um maior grau de ocorrências diferentes. Em sentido inverso, entende-se que a entropia vai ser menor no homerBin.bmp, pois só  apresenta dois tons - quanto menor for a incerteza, menor será a entropia.\\
+
+
+\subsection{Compressão}
+
+\textit{"Será possível comprimir cada uma das fontes de forma não destrutiva? Se Sim, qual a compressão máxima que se consegue alcançar? Justifique."}\\\\
+Uma compressão não destrutiva de cada uma das fontes é \underline{possível}, sendo que a compressão máxima teórica para cada caracter, ou conjunto destes, corresponde ao valor da sua entropia.\\Como não é possível, no entanto, ser feita a representação decimal de bits (valores encontrados para a entropia), temos que considerar um nº de bits \underline{inteiro}, imediatamente acima do valor encontrado. Se este valor ainda for menor que o nº de bits ocupado na realidade pelo caracter em questão, isto significa que este tipo de compressão é alcançável - e.x: considerando que cada caracter pode ser armazenado em 1 byte, se encontrássemos uma entropia de 4.3456 para um ficheiro de texto, perceberíamos que uma conversão não destrutiva seria possível usando 5 bits por caracter (em vez de 8).\\\\
+\textbf{Considerando:}\\\\
+unsigned char $\Rightarrow$ 1 byte\\
+char $\Rightarrow$ 1 byte\\
+float $\Rightarrow$ 4 bytes\\
+\newpage
+\textbf{Nota:} Considerámos que: para o armazenamento das imagens bmp, cada uma das componentes RGB utilizaria \textit{unsigned char} para armazenamento da informação; \textit{float} para o ficheiro wav; \textit{char} para o ficheiro txt.\\\\
+\textbf{Passamos agora explicitar todos os casos:}
+
+\begin{center}
+\begin{tabular}{|p{1.0in}|p{1.1in}|p{1.3in}|}
+\hline
+\multicolumn{3}{|c|}{Tabela}\\ \hline
+Ficheiro&Memória ocupada&Compressão possível \\
+&(por caracter)&(segundo a entropia)\\ \hline
+kid.bmp&3 Bytes&7 bits\\ \hline
+homer.bmp&3 Bytes&4 bits\\ \hline
+homerBin.bmp&3 Bytes&7 bits\\ \hline
+guitarSolo.wav&4 Bytes&4 bits\\ \hline
+english.txt&1 Byte&5 bits\\ \hline
+\end{tabular}
+\end{center} 
+
+\section{Hufflen.m}
+
+\subsection{calcMediaBits.m}
+Em conjunto com \textbf{Hufflen}, criámos uma função \textbf{calcMediaBits} que recebe a matriz do número de bits necessários à codificação de cada caracter, segundo \textit{Huffman Encoding}, e calcula a sua média - não a média aritmética, mas baseada na probabilidade de acontecimento de cada caracter:
+\[
+	media = \sum_i P_n . Hf_n
+\]
+ sendo \textit{Hf} a matriz devolvida por \textbf{Hufflen} e \textit{P} a probabilidade do acontecimento correspondente.
+
+\newpage
+
+\subsection{Cálculos e resultados}
+
+\rule{12.5cm}{0.4pt}\\\\
+\ \ \ \ \ \ \ \ \ \ kid.bmp  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  homer.bmp\\
+\centerline{\includegraphics[scale=0.40]{histograma_v2_kid} \includegraphics[scale=0.40]{histograma_v2_homer}}
+\ \ \ Nº médio: 6.9832  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Nº médio: 3.5483\\\\
+\rule{12.5cm}{0.4pt}\\\\
+\ \ \ \ \ \ \ \ \ \ homerBin.bmp  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  guitarSolo.wav\\
+\centerline{\includegraphics[scale=0.40]{histograma_v2_homerBin} \includegraphics[scale=0.40]{histograma_v2_guitarSolo}}
+\ \ \ Nº médio: 1  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Nº médio: 7.3791\\\\
+\rule{12.5cm}{0.4pt}\\\\
+\newpage
+\begin{center}
+english.txt\\
+\includegraphics[scale=0.40]{histograma_v2_english}\\
+Nº médio: 4.2518
+\end{center}
+\rule{12.5cm}{0.4pt}\\\\
+
+\subsection{Comentário aos dados}
+
+Segundo os nossos cálculos, verifica-se que o número médio de bits calculado é sempre maior que a entropia - o que nos leva a acreditar na validade destes. Também sabemos que, através de \textit{Huffman encoding}, a média de bits para a representação da informação nunca será maior do que o 
+valor da $entropia + 1$, factor que também se verifica nos dados obtidos.\\\\
+Uma vez que os valores da média de bits - conseguida através do uso de \textbf{calcMediaBits} - se aproxima bastante do valor da entropia, podemos admitir que, para o alfabeto em questão, esta compressão seria quase óptima (à excepção do último caso, em que a diferença de representação, para uma fonte relativamente grande, seria "descomunal" por utilizar 5 bits para a codificação de cada caracter em vez de 4).
+
+\section{Reutilização de funções}
+
+\subsection{Alterações}
+
+Às funções \textbf{Histograma}, \textbf{Entropia} e \textbf{calcOcorrencias} foi adicionado um novo argumento, \textit{file\_path}, de forma aos cálculos realizados poderem ser melhor adequados ao tipo de ficheiro em causa. Quanto à última referida, o método de contagem foi ligeiramente alterado:\\\\
+$\Rightarrow$ já não procura todas as ocorrências de \underline{um} caracter numa fonte;\\
+$\Rightarrow$ utiliza uma matriz com dimensões (\textit{length(A)} x \textit{length(A)}) para armazenamento das ocorrências de todos os \underline{pares};\\
+$\Rightarrow$ Continua a devolver uma matriz (1 x N) sendo, neste caso, $N = length(A)^2$;\\
+
+\subsection{Cálculos e resultados}
+
+\textbf{Valores de entropia obtidos:}\\
+kid.bmp $\Rightarrow$ 5.4091\\
+homer.bmp $\Rightarrow$ 2.9111\\
+homerBin.bmp $\Rightarrow$ 0.8978\\
+guitarSolo.wav $\Rightarrow$ 6.2808\\
+english.txt $\Rightarrow$ 2.6708\\
+
+\subsection{Comentários aos dados}
+
+É-nos um pouco difícil quantizar mentalmente quanto será a entropia para os ficheiros em questão, mas uma coisa sabemos: \textit{quanto maior for a quantidade de caracteres agrupados, menor será o valor da entropia correspondente}. \\\\Apesar de, para quantidades grandes de caracteres, isto não ser viável numa aplicação prática, não deixa de se verificar nos nossos resultados para um número reduzido - todos os valores que obtivémos foram, de facto, inferiores aos valores anteriormente obtidos para agrupamentos de apenas \underline{um} caracter.
+
+\section{Informação mútua}
+
+\subsection{Introdução teórica}
+
+\begin{comment}
+A informação mútua, de uma maneira simples, é uma medida da quantidade de informação que uma variável aleatória contém acerca da outra.
+\end{comment}
+
+\textbf{Teorema 5.1 (Relação entre informação mútua e entropia).}
+\begin{center}
+$I(X;Y) = I(Y;X)$\\
+$I(X;X) = H(X)$\\
+$I(X;Y) = H(X) - H(X|Y)$\\
+$I(X;Y) = H(Y) - H(Y|X)$\\
+$I(X;Y) = H(X) + H(Y) - H(X,Y)$
+\end{center}
+
+Através das relações acima descritas é possível descobrir I(X,Y) através de H(X), H(Y) e H(X,Y).\\
+Assumindo X como a query e Y como cada janela do target, no cálculo da informação mútua, a entropia do query é sempre igual. Por outro lado, a window vai mudando -  e como tal também a sua entropia, - logo podemos  calcular e guardar  a entropia do query no início, como variável.\\
+Depois, a cada iteração, com recurso à função \textbf{Entropia} do exercício 2, será calculada: a entropia de Y; a entropia conjunta de X e Y. De seguida, com os valores obtidos, calculamos o valor da informação mútua - quanto maior for esta, maior será a semelhança entre eles.\\
+
+\subsection{Alínea B}
+
+\centerline{\includegraphics[scale=0.40]{histograma_ex6}}
+Da análise dos gráficos podemos constatar que, de entre os targets escolhidos, verificamos que “target01 – repeat.wav” possui valores de informação mútua com a query “guitarSolo.wav” superiores a “target02 – repeatNoise.wav”. Isto deriva dos valores da informação mútua do target01 variarem entre 0.5 e 8 bits por símbolo, enquanto que com o target02 os valores variam entre 0.3 e 2.8.\\
+Através da análise dos dois  gráficos podemos também constatar uma semelhança entre ambos, que é justificada pelo facto do  “target02 – repeatNoise.wav” conter um maior nível de ruído e distorção no som - o que influencia os resultados obtidos.
+
+\subsection{Alínea C}
+
+Song06.wav $\Rightarrow$ 7.338379\\
+Song07.wav $\Rightarrow$ 6.313053\\
+Song05.wav $\Rightarrow$ 3.961751\\
+Song04.wav $\Rightarrow$ 0.409696\\
+Song02.wav $\Rightarrow$ 0.377678\\
+Song03.wav $\Rightarrow$ 0.304454\\
+Song01.wav $\Rightarrow$ 0.257843\\
+
+Como podemos ver pelos resultados apresentados, os 3 ficheiros que apresentam uma maior semelhança com o query “guitarSolo.wav”  são: “Song06.wav”; “Song07.wav”; “Song05.wav”. Ao reproduzi-los, podemos verificar que se trata da mesma musica (mas com diferentes qualidades de som), onde “Song06.wav” apresenta um som limpo. “Song07.wav” tem um som com um pouco de estática e, por fim, “Song05.wav” tem um maior nível de ruído - o que explica a diferença que existe entre os valores de informação mútua dos targets.
+
+\end{document}
