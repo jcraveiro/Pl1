@@ -1,0 +1,132 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage[utf8]{inputenc}
+\graphicspath{ {images/} }
+
+\begin{document}
+
+\title{\bfseries{}Entropia, Redundância e \\Informação mútua}
+
+\author{\\ \\ \\Nuno Gonçalves \\ João Craveiro \\ \\ \\ }
+
+\maketitle
+
+\newpage
+
+\section{Histograma.m}
+Com a finalidade de criar uma vizualização gráfica, por meio de um histograma, para o número de ocorrências dos símbolos de determinado alfabeto, criámos uma script "Histograma.m" que rerecebe como argumentos:\\\\
+$\Rightarrow$ P (fonte de informação a analisar)\\
+$\Rightarrow$ A (alfabeto, que contém todos os caracteres possíveis para a fonte P)\\\\
+Com base nestes dois argumentos, e com o auxílio da funçao \textbf{bar}, criamos o display final apresentado ao utilizador.
+
+\section{Entropia.m}
+
+Neste exercício é-nos pedido para "\textit{determinar o limite mínimo teórico para o número médio de bits por símbolo}", isto é, a \textit{entropia}. Criámos então uma script, "Entropia.h", que recebe como argumentos:\\\\
+$\Rightarrow$ P (fonte de informação a analisar)\\
+$\Rightarrow$ A (alfabeto, que contém todos os caracteres possíveis para a fonte P)\\\\
+\textbf{1º passo:}\\
+Cálculo da probabilidade de ocorrência de cada símbolo, através de \textbf{calcOcorrencias};\\\\
+\textbf{2º passo:}\\
+Remoção do todos os valores iguais a 0, do vector de probabilidades criado;\\\\
+\textbf{3º passo}\\
+Cálculo da entropia através da fómula:\\\\
+\[
+H_x = -\sum_i P_x . log_2 \left(\frac{1}{P_x}\right)
+\]
+
+\newpage
+
+\section{Dados e representação gráfica}
+
+\begin{comment}
+Usando  as funções implementadas nos dois anteriores exercícios, criámos um script que:\\
+- lê os ficheiros a analisar;\\
+- determina o seu alfabeto através da funcão criaAlfabeto;\\
+- o seu histograma de ocorrências;\\
+- entropia.\\\\Por fim, apresenta a informação relevante, isto é, o histograma de ocorrências e o valor da entropia.
+                    
+Os alfabetos são determinados na função criaAlfabeto através de um switch que analisa a extensão do ficheiro e depois retorna o alfabeto correspondente.          
+\end{comment}
+
+\subsection{criaAlfabeto.m}
+
+\begin{comment}
+$\Rightarrow$ Para os ficheiros \textit{bmp} sabemos que o alfabeto reside entre 0 e 255, ($2^nbits$)-1, logo bastou criar uma matriz entre 0 e 255 com step de 1. \\
+$\Rightarrow$ No ficheiro de texto o alfabeto assume-se ser composto por todas as letras do alfabeto romano sem assentos, pontuação e o caracter espaço.\\
+$\Rightarrow$ Para o ficheiro \textit{wav}, através dos valores retornados pelo \textbf{wavread} (fonte e numero de bits para indexar o alfabeto (nbits)),  usando a função \textbf{linspace}, gera-se uma matriz do alfabeto de $2^nbits$ compreendida no  intervalo [-1,1[.\\\\
+\end{comment}
+
+\subsection{Cálculos e resultados}
+\rule{12.5cm}{0.4pt}\\\\
+\ \ \ \ \ \ \ \ \ \ kid.bmp  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  homer.bmp\\
+\centerline{\includegraphics[scale=0.40]{histograma_kid} \includegraphics[scale=0.40]{histograma_homer}}
+\ \ \ Entropia: 6.954143  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Entropia: 3.465865\\\\
+\rule{12.5cm}{0.4pt}\\\\
+\ \ \ \ \ \ \ \ \ \ homerBin.bmp  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  guitarSolo.wav\\
+\centerline{\includegraphics[scale=0.40]{histograma_homerBin} \includegraphics[scale=0.40]{histograma_guitarSolo}}
+\ \ \ Entropia: 6.954143  \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  Entropia: 3.465865\\\\
+\rule{12.5cm}{0.4pt}\\\\
+\begin{center}
+english.txt\\
+\includegraphics[scale=0.40]{histograma_english}\\
+Entropia: 4.227968
+\end{center}
+\rule{12.5cm}{0.4pt}\\\\
+
+\subsection{Comentário aos dados}
+
+\begin{comment}
+Em análise, mediante os nossos conhecimentos, concordamos com os resultados obtidos.\\No homerBin.bmp estes resultados demostram uma predominância exclusiva da cor preta (0) e branca (255), como realmente acontece.\\No homer.bmp consegue-se verificar a dominância da cor preta, mas também se notam ligeiras ocorrências de cores próximas, ora do preto ora do branco, o que nos leva a perceber que na imagem predomina o preto e cores cinzentas claras ou escuras.\\Já o kid.bmp tem uma distribuição mais variada, logo supõe-se haver um maior número de tons acinzentados e pretos, não totalmente escuros.\\Quanto ao ficheiro de texto, cujo código ASCII correspondente a cada caracter está representado no eixo dos XX do gráfico, podemos verificar um menor número de ocorrências nos primeiros indices - ou seja nas letras minúsculas, como seria expectável.\\\\A entropia, segundo vemos pelos gráficos, irá ser maior no guitarSolo.bmp, visto ser o que apresenta um maior grau de ocorrências diferentes. Em sentido inverso, entende-se que a entropia vai ser menor no homerBin.bmp, pois só apresenta dois tons - quanto menor for a incerteza, menor será a entropia.\\\\
+\textbf{Respota à pergunta:}\\
+\end{comment}
+
+\section{Hufflen.m}
+
+\subsection{calcMediaBits.m}
+Em conjunto com \textbf{Hufflen}, criámos uma função \textbf{calcMediaBits} que recebe a matriz do número de bits necessários à codificação de cada caracter, segundo \textit{Huffman Encoding}, e calcula a sua média - não a média aritmética, mas baseada na probabilidade de acontecimento de cada caracter:
+\[
+	media = \sum_i P_n . Hf_n
+\]
+ sendo \textit{Hf} a matriz devolvida por \textbf{hufflen} e \textit{P} a probabilidade do acontecimento correspondente.
+
+\subsection{Cálculos e resultados}
+
+\textbf{Valores médios obtidos:}\\
+kid.bmp $\Rightarrow$ 6.9832\\
+homer.bmp $\Rightarrow$ 3.5483\\
+homerBin.bmp $\Rightarrow$ 1\\
+guitarSolo.wav $\Rightarrow$ 7.3791\\
+english.txt $\Rightarrow$ 4.2518\\
+
+\subsection{Comentário aos dados}
+
+Segundo os nossos cálculos, verifica-se que o número médio de bits calculado é sempre maior que a entropia - o que nos leva a acreditar na validade destes. Também sabemos que, através de \textit{Huffman encoding}, a média de bits para a representação da informação nunca será maior do que o 
+valor da $entropia + 1$, factor que também se verifica nos dados obtidos.\\\\
+Uma vez que os valores da média de bits - conseguida através do uso de \textbf{calcMediaBits} - se aproxima bastante do valor da entropia, podemos admitir que, para o alfabeto em questão, esta compressão seria quase óptima (à excepção do último caso, em que a diferença de representação, para uma fonte relativamente grande, seria "descomunal" por utilizar 5 bits para a codificação de cada caracter em vez de 4).
+
+\section{Reutlização de funções}
+
+\subsection{Alterações}
+
+Às funções \textbf{Histograma}, \textbf{Entropia} e \textbf{calcOcorrencias} foi adicionado um novo argumento, \textit{file\_path}, de forma aos cálculos realizados poderem ser melhor adequados ao tipo de ficheiro em causa. Quanto à última referida, o método de contagem foi ligeiramente alterado:\\\\
+$\Rightarrow$ já não procura todas as ocorrências de \underline{um} caracter numa fonte;\\
+$\Rightarrow$ utiliza uma matriz com dimensões (\textit{length(A)} x \textit{length(A)}) para armazenamento das ocorrências de todos os \underline{pares};\\
+$\Rightarrow$ Continua a devolver uma matriz (1 x \textit(length(A)));\\
+
+\subsection{Cálculos e resultados}
+
+\textbf{Valores de entropia obtidos:}\\
+kid.bmp $\Rightarrow$ 5.4091\\
+homer.bmp $\Rightarrow$ 2.9111\\
+homerBin.bmp $\Rightarrow$ 0.8978\\
+guitarSolo.wav $\Rightarrow$ 6.2808\\
+english.txt $\Rightarrow$ 2.6708\\
+
+\subsection{Comentários aos dados}
+
+É-nos um pouco difícil quantizar mentalmente quanto será a entropia para os ficheiros em questão, mas uma coisa sabemos: \textit{quanto maior for a quantidade de caracteres agrupados, menor será o valor da entropia correspondente}. \\\\Apesar de, para quantidades grandes de caracteres, isto não ser viável numa aplicação prática, não deixa de se verificar nos nossos resultados para um número reduzido - todos os valores que obtivémos foram, de facto, inferiores aos valores anteriormente obtidos para agrupamentos de apenas \underline{um} caracter.
+
+\end{document}
